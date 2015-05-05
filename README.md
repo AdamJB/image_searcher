@@ -1,8 +1,8 @@
-Flickr Challenge App
+Image Search
 
 - The app lets you search the Flickr API and display images
-- The images are loaded without a library.
 
+Note: You'll need to provide a flickr API Key in the build.gradle file where specified
 
 The App Requires the Following to Run:
 - Built for Android 4.1 and up
