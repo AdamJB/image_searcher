@@ -75,6 +75,13 @@ public class SearchFragment extends Fragment {
     mAdapter = new SearchResultAdapter();
     mRecyclerView.setAdapter(mAdapter);
 
+    mAdapter.setCallbacks(new SearchResultAdapter.Callbacks() {
+      @Override public void onItemClicked(int position) {
+        startActivity(FullScreenPhotoActivity.newIntent(getActivity(), position,
+            (ArrayList<PhotoViewModel>) mPhotos));
+      }
+    });
+
     if (mPhotos != null) {
       showResults();
     } else if (mLastMessageStringResId != 0) {

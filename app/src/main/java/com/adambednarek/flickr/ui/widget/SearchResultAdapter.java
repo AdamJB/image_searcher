@@ -12,6 +12,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
   private List<PhotoViewModel> mData;
 
+  private Callbacks mCallbacks;
+
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v =
         LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_photo_impl, parent, false);
@@ -19,9 +21,17 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
     return vh;
   }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
     PhotoViewHolder photoVh = (PhotoViewHolder) holder;
     photoVh.mView.loadImage(mData.get(position).getThumbnail());
+
+    photoVh.mView.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (mCallbacks != null) {
+          mCallbacks.onItemClicked(position);
+        }
+      }
+    });
   }
 
   @Override public int getItemCount() {
@@ -31,6 +41,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
   public void updateData(List<PhotoViewModel> data) {
     mData = data;
     notifyDataSetChanged();
+  }
+
+  public void setCallbacks(Callbacks mCallbacks) {
+    this.mCallbacks = mCallbacks;
+  }
+
+  public interface Callbacks {
+    void onItemClicked(int position);
   }
 
   public static class PhotoViewHolder extends RecyclerView.ViewHolder {
