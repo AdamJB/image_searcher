@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.adambednarek.flickr.R;
 import com.adambednarek.flickr.api.controller.FlickrController;
+import com.adambednarek.flickr.api.response.Photo;
 import com.adambednarek.flickr.api.response.PhotoListing;
 import com.adambednarek.flickr.api.response.SearchResponse;
+import com.adambednarek.flickr.ui.model.PhotoViewModel;
+import java.util.ArrayList;
+import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -23,6 +27,7 @@ public class SearchFragment extends Fragment {
 
   private final FlickrController mFlickrController = FlickrController.getInstance();
   private PhotoListing mSearchResults;
+  private List<PhotoViewModel> mPhotos;
   private TextView mStatusText;
   private RecyclerView mResultsContainer;
   private ContentLoadingProgressBar mLoadingView;
@@ -55,6 +60,10 @@ public class SearchFragment extends Fragment {
         if (mSearchResults == null || mSearchResults.getTotal() == 0) {
           showStatusText(R.string.no_results);
         } else {
+          mPhotos = new ArrayList<>();
+          for (Photo photo : mSearchResults.getPhoto()) {
+            mPhotos.add(new PhotoViewModel(photo));
+          }
           showResults();
         }
       }
@@ -71,6 +80,8 @@ public class SearchFragment extends Fragment {
     mLoadingView.setVisibility(View.GONE);
 
     mResultsContainer.setVisibility(View.VISIBLE);
+
+    Log.d(TAG, "Photo URL? " + mPhotos.get(0).getThumbnail());
   }
 
   private void showStatusText(int errorStringResId) {
