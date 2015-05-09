@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Flickr</string>
+  <string name="app_name">Flickr</string>
 
-    <string name="search_title">Search</string>
-    <string name="search_hint">Search Photos...</string>
+  <string name="search_title">Search</string>
+  <string name="search_hint">Search Photos...</string>
+
+  <string name="search_photos">Search photos on Flickr</string>
+  <string name="search_error">Sorry! There was a problem searching photos</string>
+  <string name="no_results">No Results found</string>
 </resources>
